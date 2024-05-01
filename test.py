@@ -1,16 +1,15 @@
-import cv2
+from picamera import PiCamera
+from time import sleep
 
-# หากใช้กล้อง USB
-cap = cv2.VideoCapture(0)
+camera = PiCamera()
 
-# หากใช้กล้อง Raspberry Pi
-# cap = cv2.VideoCapture("video0", cv2.CAP_V4L2)
+# กำหนดค่าสำหรับการแสดงตัวอย่างให้เป็น YUV420
+camera.resolution = (960, 720)
+camera.framerate = 30
+camera.start_preview()
 
-while(True):
-    ret, frame = cap.read()
-    cv2.imshow('frame', frame)
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
+# รอเป็นเวลา 5 วินาที
+sleep(5)
 
-cap.release()
-cv2.destroyAllWindows()
+# ปิดกล้อง
+camera.stop_preview()
